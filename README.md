@@ -4,6 +4,7 @@ A Car Selling Web Application Using Python
 * The database is connected using SQLite3 module of python
 
 ## How to run the app
+* Clone the repository to your local machine
 * Open terminal/console 
 * To install StreamLit type
 ```
@@ -11,7 +12,7 @@ pip install streamlit
 ```
 * To move to the working directory use
 ```
-cd ShopIT
+cd ShopIT(Path to the cloned repository)
 ```
 * To run the app
 ```
