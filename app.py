@@ -24,6 +24,9 @@ c = conn.cursor()
 def create_usertable():
 	c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT,password TEXT)')
 
+def create_feedback_table():
+    c.execute('CREATE TABLE IF NOT EXISTS feedbacktable(username TEXT,feedback TEXT)')
+
 def show_home():
     st.header("Welcome to ShopIt Car Sale App")
     st.subheader("Buy your dream car here") 
@@ -68,6 +71,14 @@ def login_user(username,password):
 	data = c.fetchall()
 	return data
 
+def add_feedback(username,feedback):
+    c.execute('INSERT INTO feedbacktable(username,feedback) VALUES (?,?)',(username,feedback))
+    conn.commit()
+
+def view_all_feedback():
+    c.execute('SELECT * FROM feedbacktable')
+    data = c.fetchall()
+    return data
 
 def view_all_users():
 	c.execute('SELECT * FROM userstable')
@@ -102,11 +113,17 @@ def main():
             st.success("You have successfully created a valid Account")
             st.info("Go to Login Menu to login")
     elif choice == "Contact Us":
-        st.subheader("Contact Us")
-        st.text("Email: example@gmail.com")
-        st.text("Phone: 1234567890")
-        st.text("Address: 123, ABC Street, XYZ City, 123456")                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-    
+        st.title("Contact Us")
+        with st.form('Contact Us'):
+            username = st.text_input("Username")
+            feedback = st.text_area("Enter your message here")
+            sb = st.form_submit_button("Submit")
+        if sb:
+            create_feedback_table()
+            add_feedback(username,feedback)
+            st.success("Feedback Submitted")
+            st.info("Thank you for your feedback")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 
 if __name__ == '__main__':
     main()
